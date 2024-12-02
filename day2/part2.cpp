@@ -30,6 +30,7 @@ int main()
         }
         number_groups.push_back(numbers);
     }
+    file.close();
 
     int safe = 0;
     for (int i = 0; i < number_groups.size(); i++)
