@@ -45,6 +45,12 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "typeinfo": "cpp",
-    "sstream": "cpp"
-  }
+    "sstream": "cpp",
+    "regex": "cpp",
+    "bitset": "cpp",
+    "cstring": "cpp",
+    "ctime": "cpp",
+    "map": "cpp"
+  },
+  "deno.enable": true
 }
