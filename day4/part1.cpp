@@ -6,40 +6,69 @@
 
 int main()
 {
-    // std::ifstream file("test.txt");
-    std::ifstream file("input.txt");
+    std::ifstream file("test.txt");
+    // std::ifstream file("input.txt");
+    std::vector<std::vector<char>> grid;
 
     std::string line;
-    std::vector<std::string> lines;
     while (std::getline(file, line))
     {
-        lines.push_back(line);
+        std::vector<char> row;
+        for (char c : line)
+        {
+            row.push_back(c);
+        }
+        grid.push_back(row);
     }
-    file.close();
-
-    std::vector<std::pair<int, int>> instructions; // Store pairs of x and y
     int total = 0;
 
-    for (const auto &line : lines)
+    for (int row = 0; row < grid.size(); row++)
     {
-        // Regex to match mul(x,y)
-        std::regex pattern(R"(mul\((\d+),(\d+)\))");
-        std::smatch match;
-
-        // Search the line for all occurrences of the pattern
-        auto search_start = line.cbegin();
-        while (std::regex_search(search_start, line.cend(), match, pattern))
+        for (int col = 0; col < grid.at(row).size(); col++)
         {
-            int x = std::stoi(match[1].str());
-            int y = std::stoi(match[2].str());
-            instructions.emplace_back(x, y);
-            total += x * y;
-            search_start = match.suffix().first; // Continue searching after this match
+            if (grid.at(row).at(col) == 'X')
+            {
+                // check for each one to not go out of range
+                // something might not be able to go +3 row but could got +3 col, so check for each one
+
+                if (grid.at(row - 1).at(col) == 'M' && grid.at(row - 2).at(col) == 'A' && grid.at(row - 3).at(col) == 'S')
+                {
+                    total++;
+                }
+                if (
+                    grid.at(row + 1).at(col) == 'M' && grid.at(row + 2).at(col) == 'A' && grid.at(row + 3).at(col) == 'S')
+                {
+                    total++;
+                }
+                if (grid.at(row).at(col + 1) == 'M' && grid.at(row).at(col + 2) == 'A' && grid.at(row).at(col + 3) == 'S')
+                {
+                    total++;
+                }
+                if (grid.at(row).at(col - 1) == 'M' && grid.at(row).at(col - 2) == 'A' && grid.at(row).at(col - 3) == 'S')
+                {
+                    total++;
+                }
+                if (grid.at(row + 1).at(col + 1) == 'M' && grid.at(row + 2).at(col + 2) == 'A' && grid.at(row + 3).at(col + 3) == 'S')
+                {
+                    total++;
+                }
+                if (grid.at(row - 1).at(col + 1) == 'M' && grid.at(row - 2).at(col + 2) == 'A' && grid.at(row - 3).at(col + 3) == 'S')
+                {
+                    total++;
+                }
+                if (grid.at(row - 1).at(col - 1) == 'M' && grid.at(row - 2).at(col - 2) == 'A' && grid.at(row - 3).at(col - 3) == 'S')
+                {
+                    total++;
+                }
+                if (grid.at(row + 1).at(col - 1) == 'M' && grid.at(row + 2).at(col - 2) == 'A' && grid.at(row + 3).at(col - 3) == 'S')
+                {
+                    total++;
+                }
+            }
         }
+        std::cout << std::endl;
     }
 
-    // Output the total
     std::cout << "Total: " << total << std::endl;
-
     return 0;
 }
